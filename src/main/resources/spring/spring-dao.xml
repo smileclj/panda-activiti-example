@@ -57,19 +57,17 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
     </aop:config>
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+   <!--  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--configLocation属性指定mybatis的核心配置文件 -->
+        configLocation属性指定mybatis的核心配置文件
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
-        <!--mapperLocations指定映射文件路径 -->
+        mapperLocations指定映射文件路径
         <property name="mapperLocations" value="classpath:com/panda/activiti/mapper/xml/*.xml" />
-    </bean>
+    </bean> -->
     
      <!--scan for mappers and let them be autowired -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    	<!-- 只查找Ext -->
-    	<property name="annotationClass" value="org.springframework.stereotype.Repository" />
-         <!--Mapper接口所在包名，Spring会自动查找其下的Mapper -->
-        <property name="basePackage" value="com.panda.activiti.mapper"/>
-    </bean>
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 只查找Ext 
+		<property name="annotationClass" value="org.springframework.stereotype.Repository" 
+		/> Mapper接口所在包名，Spring会自动查找其下的Mapper <property name="basePackage" value="com.panda.activiti.mapper"/> 
+		</bean> -->
 </beans>
