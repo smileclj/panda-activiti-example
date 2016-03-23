@@ -2,7 +2,7 @@
 <Configuration status="OFF">
     <Properties>
         <Property name="LOG_HOME">logs</Property>
-        <Property name="LOG_NAME">panda</Property>
+        <Property name="LOG_NAME">panda-activiti-example</Property>
     </Properties>
 
     <Appenders>
@@ -25,7 +25,7 @@
 	
     <Loggers>
      	<!-- 3rdparty Loggers -->
-     	<Logger name="com.iweb.panda.mapper" level="DEBUG" />
+     	<Logger name="com.iweb.activiti.mapper" level="DEBUG" />
         <Logger name="org.mybatis" level="DEBUG" />
         
         <Root level="INFO">
