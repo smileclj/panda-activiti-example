@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF">
+    <Properties>
+        <Property name="LOG_HOME">logs</Property>
+        <Property name="LOG_NAME">panda</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT"> <!-- SYSTEM_ERR -->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l -> %msg%n" />
+        </Console>
+
+        <RollingFile name="RollingFile"
+                     fileName="${LOG_HOME}/${LOG_NAME}/${LOG_NAME}.log"
+                     filePattern="${LOG_HOME}/${LOG_NAME}/%d{yyyy-MM}/%d{yyyy-MM-dd}/${LOG_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %l -> %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+	
+    <Loggers>
+     	<!-- 3rdparty Loggers -->
+     	<Logger name="com.iweb.panda.mapper" level="DEBUG" />
+        <Logger name="org.mybatis" level="DEBUG" />
+        
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="C:\work_soft\maven_jar\respository\mysql\mysql-connector-java\5.1.28\mysql-connector-java-5.1.28.jar" />
+	<context id="context1">
+		<plugin type="com.panda.activiti.util.mybatis.MapperExtGenerateplugin" />
+		<plugin type="com.panda.activiti.util.mybatis.PageHelperPlugin" />
+
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!--数据库链接URL，用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/activiti" userId="root"
+			password="123456">
+		</jdbcConnection>
+		<!-- 生成模型的包名和位置 -->
+		<javaModelGenerator targetPackage="com.panda.activiti.entity"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成映射文件的包名和位置 -->
+		<sqlMapGenerator targetPackage="com.panda.activiti.mapper.xml"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 生成DAO的包名和位置 -->
+		<javaClientGenerator targetPackage="com.panda.activiti.mapper"
+			targetProject="src/main/java" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 要生成哪些表 -->
+	</context>
+</generatorConfiguration>

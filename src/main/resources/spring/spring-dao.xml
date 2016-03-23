@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop
+						   http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--数据源-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxTotal" value="${jdbc.maxTotal}"/>
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"/>
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+        <property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}"/>
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+        <property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}"/>
+        <property name="maxOpenPreparedStatements" value="${jdbc.maxOpenPreparedStatements}"/>
+        <property name="removeAbandonedOnBorrow" value="${jdbc.removeAbandonedOnBorrow}"/>
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+    </bean>
+
+    <!--事务管理-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--声明式事务-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" propagation="SUPPORTS"  read-only="true"/>
+            <tx:method name="has*" propagation="SUPPORTS"  read-only="true"/>
+            <tx:method name="query*" propagation="SUPPORTS" timeout="10" read-only="true"/>
+            <tx:method name="search*" propagation="SUPPORTS" timeout="10" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" timeout="10" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED" timeout="30" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config>
+        <aop:pointcut id="serviceMethods" expression="execution(* com.panda.activiti.service.impl.*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+    </aop:config>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--configLocation属性指定mybatis的核心配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <!--mapperLocations指定映射文件路径 -->
+        <property name="mapperLocations" value="classpath:com/panda/activiti/mapper/xml/*.xml" />
+    </bean>
+    
+     <!--scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<!-- 只查找Ext -->
+    	<property name="annotationClass" value="org.springframework.stereotype.Repository" />
+         <!--Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+        <property name="basePackage" value="com.panda.activiti.mapper"/>
+    </bean>
+</beans>
