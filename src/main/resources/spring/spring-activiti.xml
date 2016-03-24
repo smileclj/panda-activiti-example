@@ -11,6 +11,8 @@
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jobExecutorActivate" value="false" />
+		<property name="deploymentResources" value="classpath:bpmn/**/*.bpmn" />
+		<property name="deploymentMode" value="resource-parent-folder" />
 	</bean>
 
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
@@ -27,4 +29,6 @@
 		factory-method="getHistoryService" />
 	<bean id="managementService" factory-bean="processEngine"
 		factory-method="getManagementService" />
+	<bean id="identityService" factory-bean="processEngine"
+		factory-method="getIdentityService" />
 </beans>
