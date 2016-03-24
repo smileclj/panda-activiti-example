@@ -1,4 +1,4 @@
-package com.iweb.panda.test;
+package com.iweb.panda.activiti;
 
 import java.util.List;
 
@@ -26,8 +26,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/applicationContext.xml")
-public class ActivitiProcessUnit {
-	private static final Logger logger = LoggerFactory.getLogger(ActivitiProcessUnit.class);
+public class ActivitiProcessDefinitionUnit {
+	private static final Logger logger = LoggerFactory.getLogger(ActivitiProcessDefinitionUnit.class);
 	@Resource
 	private RepositoryService repositoryService;
 	@Resource
