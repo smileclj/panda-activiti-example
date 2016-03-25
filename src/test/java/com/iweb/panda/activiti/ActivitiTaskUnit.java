@@ -67,10 +67,24 @@ public class ActivitiTaskUnit {
 
 	private void _printProcessInstance(ProcessInstance processInstance) {
 		logger.info(
-				"ProcessInstanceId:{},Name:{},ProcessDefinitionId:{},ProcessDefinitionName:{},ProcessDefinitionKey:{},DeploymentId:{},BusinessKey:{}",
+				"ProcessInstanceId:{},Name:{},ProcessDefinitionId:{},ProcessDefinitionName:{},ProcessDefinitionKey:{},DeploymentId:{},BusinessKey:{},isSuspended:{}",
 				new Object[] { processInstance.getProcessInstanceId(), processInstance.getName(), processInstance.getProcessDefinitionId(),
 						processInstance.getProcessDefinitionName(), processInstance.getProcessDefinitionKey(), processInstance.getDeploymentId(),
-						processInstance.getBusinessKey() });
+						processInstance.getBusinessKey(), processInstance.isSuspended() });
 	}
 
+	/**
+	 * 删除流程实例
+	 * 
+	 * @author chenlj
+	 * @Date 2016 下午6:11:04
+	 */
+	@Test
+	public void removeProcess() {
+		// runtimeService.deleteProcessInstance(paramString1, paramString2);
+		List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().list();
+		for (ProcessInstance processInstance : processInstances) {
+			_printProcessInstance(processInstance);
+		}
+	}
 }
